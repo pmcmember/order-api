@@ -18,7 +18,7 @@ public class UserRepository {
      */
     public Optional<User> findOne(long userId) {
         var mockUser = new User();
-        mockUser.setUserId(1L);
+        mockUser.setUserId(userId);
         return Optional.of(mockUser);
     }
 }
