@@ -1,10 +1,13 @@
 package com.order.api.controller;
 
+import com.order.api.exception.ValidationException;
 import com.order.api.model.selector.OrderSelector;
 import com.order.api.service.OrderService;
+import java.util.stream.Collectors;
 import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +34,14 @@ public class OrderController {
      */
     @GetMapping("/users/{userId}")
     public ResponseEntity<?> fetchUserOrders(@PathVariable("userId") @Min(1) long userId,
-                                             @Validated @ModelAttribute OrderSelector selector) {
+                                             @Validated @ModelAttribute OrderSelector selector,
+                                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            var errors = bindingResult.getFieldErrors().stream()
+                    .map(error -> error.getField() + ":" + error.getDefaultMessage())
+                    .collect(Collectors.joining(", "));
+            throw new ValidationException(errors);
+        }
         var response = orderService.fetchUserOrders(userId, selector);
         return ResponseEntity.ok(response);
     }

@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * UserOrderを作成する
  */
 @Component
 public class UserOrderFactory {
@@ -19,7 +19,7 @@ public class UserOrderFactory {
      * @param products {@link Product} のリスト
      * @return {@link UserOrder}
      */
-    public UserOrder factory(Order order, List<Product> products) {
+    public UserOrder create(Order order, List<Product> products) {
         var productId = order.getProductId();
         var product = products.stream()
                 .filter(pr -> pr.getProductId() == productId)

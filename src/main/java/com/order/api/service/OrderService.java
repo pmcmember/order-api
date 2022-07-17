@@ -33,7 +33,7 @@ public class OrderService {
      *
      * @param userId   ユーザーID
      * @param selector {@link OrderSelector} 検索条件
-     * @return {@link UserOrderResponse} 注文情報がない場合はnull
+     * @return {@link UserOrderResponse}
      */
     public UserOrderResponse fetchUserOrders(long userId, OrderSelector selector) {
 
@@ -54,7 +54,7 @@ public class OrderService {
         // 注文情報に紐づく商品情報一覧を取得した上でレスポンスに設定する注文情報を作成して返す
         List<Product> products = productRepository.fetchByIds(productIds);
         List<UserOrder> userOrders = orders.stream()
-                .map(order -> userOrderFactory.factory(order, products))
+                .map(order -> userOrderFactory.create(order, products))
                 .collect(Collectors.toList());
 
         return UserOrderResponse.builder()

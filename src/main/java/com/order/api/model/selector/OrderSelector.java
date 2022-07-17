@@ -1,8 +1,8 @@
 package com.order.api.model.selector;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 /**
  * 注文検索条件
@@ -19,6 +19,6 @@ public class OrderSelector {
     /**
      * 取得件数
      */
-    @Max(100)
+    @Range(min = 0, max = 100)
     private long limit = 20;
 }
