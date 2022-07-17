@@ -1,0 +1,15 @@
+---
+spring:
+  application:
+    name: order-api
+  messages:
+    encoding: UTF-8
+  jackson:
+    time-zone: "Asia/Tokyo"
+
+---
+# -Dspring.profiles.active未設定時の設定
+# TODO 一旦アプリケーション立ち上げるためにh2と接続している MySQLを用意した後はMySQLをデフォルトの接続先に変える
+spring:
+  profiles:
+    default: h2
